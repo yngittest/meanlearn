@@ -1,3 +1,15 @@
 div This is the testes view.
 div {{3 + 5}}
-div message = {{ testesCtrl.message }}.
+div message: {{ testesCtrl.message }}.
+
+table.table
+  tr
+    th ISBN
+    th 書名
+    th 価格
+    th 刊行日
+  tr(ng-repeat="book in testesCtrl.books")
+    td {{book.isbn}}
+    td {{book.title}}
+    td {{book.price}}
+    td {{book.published | date: 'yyyy年MM月dd日'}}

@@ -9,6 +9,20 @@ export class TestesComponent {
   /*@ngInject*/
   constructor() {
     this.message = 'Hello hoge';
+    this.books = [
+      {
+        isbn: 'hogeisbn1',
+        title: 'hoge1',
+        price: 3000,
+        published: new Date(2015,1,8)
+      },
+      {
+        isbn: 'hogeisbn2',
+        title: 'hoge2',
+        price: 5000,
+        published: new Date(2015,10,23)
+      }
+    ]
   }
 }
 
