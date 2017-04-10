@@ -7,9 +7,26 @@ import routes from './testes.routes';
 
 export class TestesComponent {
   /*@ngInject*/
-  constructor() {
+  constructor(BookList) {
     this.message = 'Hello hoge';
-    this.books =  [
+    // BookListを使用
+    this.books =  BookList();
+  }
+}
+
+// BookListをDI
+TestesComponent.$inject = ['BookList'];
+
+export default angular.module('meanlearnApp.testes', [uiRouter])
+  .config(routes)
+  .component('testes', {
+    template: require('./testes.pug'),
+    controller: TestesComponent,
+    controllerAs: 'testesCtrl'
+  })
+  // BookListを追加
+  .value('BookList', function(){
+    return [
       {
         isbn: 'hogeisbn1',
         title: 'hoge1',
@@ -23,14 +40,5 @@ export class TestesComponent {
         published: new Date(2015,10,23)
       }
     ];
-  }
-}
-
-export default angular.module('meanlearnApp.testes', [uiRouter])
-  .config(routes)
-  .component('testes', {
-    template: require('./testes.pug'),
-    controller: TestesComponent,
-    controllerAs: 'testesCtrl'
   })
   .name;
