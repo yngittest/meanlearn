@@ -11,6 +11,7 @@ export class TestesComponent {
     this.message = 'Hello hoge';
     // BookListを使用
     this.books =  BookList();
+    this.myName = '佐藤';
   }
 }
 

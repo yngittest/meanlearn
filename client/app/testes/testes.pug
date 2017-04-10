@@ -13,3 +13,9 @@ table.table
     td {{book.title}}
     td {{book.price}}
     td {{book.published | date: 'yyyy年MM月dd日'}}
+
+form
+  label(for="name") 名前：
+  input#name(name="name" type="text" ng-model="testesCtrl.myName")
+  div こんにちは、{{testesCtrl.myName}}さん！
+  div 初めまして、{{::testesCtrl.myName}}さん！
