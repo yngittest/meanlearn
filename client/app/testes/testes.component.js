@@ -9,7 +9,7 @@ export class TestesComponent {
   /*@ngInject*/
   constructor() {
     this.message = 'Hello hoge';
-    this.books = [
+    this.books =  [
       {
         isbn: 'hogeisbn1',
         title: 'hoge1',
@@ -22,7 +22,7 @@ export class TestesComponent {
         price: 5000,
         published: new Date(2015,10,23)
       }
-    ]
+    ];
   }
 }
 
