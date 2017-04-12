@@ -17,5 +17,13 @@ table.table
 form
   label(for="name") 名前：
   input#name(name="name" type="text" ng-model="testesCtrl.myName")
-  div こんにちは、{{testesCtrl.myName}}さん！
+  div(ng-bind="'こんにちは、' + testesCtrl.myName +'さん！'")
   div 初めまして、{{::testesCtrl.myName}}さん！
+
+div(ng-bind-html="testesCtrl.memo")
+
+div(ng-bind-template="{{testesCtrl.message}}, {{testesCtrl.myName}}")
+
+div(ng-pluralize count="testesCtrl.favs.length" offset="2" when="{'0': 'nothing', '1': '{{testesCtrl.favs[0]}} say', '2': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} say', 'one': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} and 1 say', 'other': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} and other{} say'}")
+
+<!-- div {{ testesCtrl.favs.length, plural, offset:2 =0 {nothing} =1 {{{testesCtrl.favs[0]}} say} =2 {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} say} one {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} and 1 say} other {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} and other# say} }} -->
