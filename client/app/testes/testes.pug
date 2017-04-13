@@ -27,3 +27,24 @@ div(ng-bind-template="{{testesCtrl.message}}, {{testesCtrl.myName}}")
 div(ng-pluralize count="testesCtrl.favs.length" offset="2" when="{'0': 'nothing', '1': '{{testesCtrl.favs[0]}} say', '2': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} say', 'one': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} and 1 say', 'other': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} and other{} say'}")
 
 <!-- div {{ testesCtrl.favs.length, plural, offset:2 =0 {nothing} =1 {{{testesCtrl.favs[0]}} say} =2 {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} say} one {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} and 1 say} other {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} and other# say} }} -->
+
+<!-- a(ng-href="{{testesCtrl.url}}") リンク -->
+
+<!-- iframe(src="{{testesCtrl.url}}") -->
+
+script(type="text/ng-template" id="templates/execution.html")
+  dl
+    dt マルカート
+    dd 一つ一つの音を〜
+
+script(type="text/ng-template" id="templates/tempo.html")
+  dl
+    dt アチェレランド
+    dd だんだんはやく
+
+div
+  label(for="temp") テンプレート：
+  select#temp(name="temp" ng-model="testesCtrl.template" ng-options="t.url as t.title for t in testesCtrl.templates")
+    option(value="") 以下から選択してください
+
+div.box(ng-include="testesCtrl.template" onload="testesCtrl.onLoad()")

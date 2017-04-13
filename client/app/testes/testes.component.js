@@ -7,18 +7,27 @@ import routes from './testes.routes';
 
 export class TestesComponent {
   /*@ngInject*/
-  constructor(BookList , $sce) {
+  constructor(BookList , $sce, $timeout) {
     this.message = 'Hello hoge';
     // BookListを使用
     this.books =  BookList();
     this.myName = '佐藤';
     this.memo = $sce.trustAsHtml('<button>aaa</button>');
-    this.favs = ['aaa', 'bbb', 'ccc', 'ddd', 'eee']
+    this.favs = ['aaa', 'bbb', 'ccc', 'ddd', 'eee'];
+    // this.url = $sce.trustAs($sce.RESOURCE_URL, 'http://www.wings.msn.to/');
+    this.templates = [
+      {title: 'execution', url: 'templates/execution.html'},
+      {title: 'tempo', url: 'templates/tempo.html'}
+    ];
+  }
+
+  onLoad(){
+    console.log(this.template);
   }
 }
 
 // BookListをDI
-TestesComponent.$inject = ['BookList', '$sce'];
+TestesComponent.$inject = ['BookList', '$sce', '$timeout'];
 
 export default angular.module('meanlearnApp.testes', [uiRouter])
   .config(routes)
