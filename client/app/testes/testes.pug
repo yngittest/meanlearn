@@ -8,11 +8,16 @@ table.table
     th 書名
     th 価格
     th 刊行日
-  tr(ng-repeat="book in testesCtrl.books")
+  tr(ng-repeat="book in testesCtrl.books | orderBy: ['published', '-price'] | limitTo: testesCtrl.len: testesCtrl.start")
     td {{book.isbn}}
     td {{book.title}}
     td {{book.price}}
     td {{book.published | date: 'yyyy年MM月dd日'}}
+ul.pagination
+  li
+    a(href="#" ng-click="testesCtrl.pager(0)") 1
+  li
+    a(href="#" ng-click="testesCtrl.pager(1)") 2
 
 form
   label(for="name") 名前：
@@ -48,3 +53,21 @@ div
     option(value="") 以下から選択してください
 
 div.box(ng-include="testesCtrl.template" onload="testesCtrl.onLoad()")
+
+form
+  label(form="name") 名前：
+  input#name(name="name" type="text" ng-model="testesCtrl.myName")
+  button(ng-click="testesCtrl.onClick()") 送信
+div {{testesCtrl.greeting}}
+
+<!-- img(ng-src="{{testesCtrl.path}}" alt="ロゴ画像" ng-mouseover="testesCtrl.onmouseover($event)" ng-mouseleave="testesCtrl.onmouseleave()") -->
+
+div {{ testesCtrl.price | currency: '¥'}}
+
+table.table
+  tr
+    th(ng-click="name=!name; testesCtrl.sort('name', name)") 名前
+    th(ng-click="old=!old; testesCtrl.sort('old', old)") 年齢
+  tr(ng-repeat="member in testesCtrl.members")
+    td {{member.name}}
+    td {{member.old}}

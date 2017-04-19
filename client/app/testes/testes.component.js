@@ -7,10 +7,13 @@ import routes from './testes.routes';
 
 export class TestesComponent {
   /*@ngInject*/
-  constructor(BookList , $sce, $timeout) {
+  constructor(BookList, $sce, $filter) {
     this.message = 'Hello hoge';
     // BookListを使用
     this.books =  BookList();
+    this.len = 1;
+    this.start = 0;
+
     this.myName = '佐藤';
     this.memo = $sce.trustAsHtml('<button>aaa</button>');
     this.favs = ['aaa', 'bbb', 'ccc', 'ddd', 'eee'];
@@ -19,15 +22,48 @@ export class TestesComponent {
       {title: 'execution', url: 'templates/execution.html'},
       {title: 'tempo', url: 'templates/tempo.html'}
     ];
+    this.path = 'http://iphone-mania.jp/wp-content/uploads/2016/09/IMG_8216.jpg';
+
+    this.price = 1000;
+    console.log($filter('currency')(this.price, '¥'));
+
+    this.members = [
+      {name: '鈴木太郎', old: 55},
+      {name: '田中一郎', old: 58},
+      {name: '山田りお', old: 25},
+      {name: '腰掛奈美', old: 35},
+      {name: '佐藤大輔', old: 45}
+    ];
+    this.$filter = $filter;
   }
 
   onLoad(){
     console.log(this.template);
   }
+
+  onClick(){
+    this.greeting = 'こんにちは、' + this.myName + 'さん';
+  }
+
+  onmouseover(e){
+    // console.log(e);
+    this.path = 'http://www.gizmodo.jp/images/2015/09/UDvrcXquKg1l31nW_R.jpg';
+  }
+  onmouseleave(){
+    this.path = 'http://iphone-mania.jp/wp-content/uploads/2016/09/IMG_8216.jpg';
+  }
+
+  sort(exp, reverse){
+    this.members = this.$filter('orderBy')(this.members, exp, reverse);
+  }
+  pager(page){
+    this.start = this.len * page;
+  }
+
 }
 
 // BookListをDI
-TestesComponent.$inject = ['BookList', '$sce', '$timeout'];
+TestesComponent.$inject = ['BookList', '$sce', '$filter'];
 
 export default angular.module('meanlearnApp.testes', [uiRouter])
   .config(routes)
