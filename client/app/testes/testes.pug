@@ -71,3 +71,14 @@ table.table
   tr(ng-repeat="member in testesCtrl.members")
     td {{member.name}}
     td {{member.old}}
+
+
+button(ng-click="testesCtrl.onClick2()") 送信
+
+div {{testesCtrl.result}}
+
+form(name="myForm" novalidate)
+  label(for="postname") 名前：
+  input#postname(name="postname" type="text" ng-model="testesCtrl.postName")
+  button(ng-click="testesCtrl.onClickPost()") 送信
+div {{testesCtrl.postResult}}

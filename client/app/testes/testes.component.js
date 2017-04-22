@@ -7,7 +7,7 @@ import routes from './testes.routes';
 
 export class TestesComponent {
   /*@ngInject*/
-  constructor(BookList, $sce, $filter) {
+  constructor(BookList, $sce, $filter, $http) {
     this.message = 'Hello hoge';
     // BookListを使用
     this.books =  BookList();
@@ -35,6 +35,27 @@ export class TestesComponent {
       {name: '佐藤大輔', old: 45}
     ];
     this.$filter = $filter;
+
+    this.$http = $http;
+    this.result = 'GET初期値';
+    this.postResult = 'POST初期値';
+  }
+
+  onClick2(){
+    this.$http.get('/api/angtests')
+      .then(response => {
+        this.result = response.data;
+      });
+  }
+
+  onClickPost(){
+    this.$http.post('/api/angtests', {
+      name: this.postName,
+    })
+    .then(response => {
+      this.postResult = response.data;
+    });
+    this.postName = '';
   }
 
   onLoad(){
@@ -63,7 +84,7 @@ export class TestesComponent {
 }
 
 // BookListをDI
-TestesComponent.$inject = ['BookList', '$sce', '$filter'];
+TestesComponent.$inject = ['BookList', '$sce', '$filter', '$http'];
 
 export default angular.module('meanlearnApp.testes', [uiRouter])
   .config(routes)
