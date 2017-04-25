@@ -7,12 +7,12 @@ import routes from './testes.routes';
 
 export class TestesComponent {
   /*@ngInject*/
-  constructor(BookList, $sce, $filter, $http) {
+  constructor(BookList, $sce, $filter, $http, $resource) {
     this.message = 'Hello hoge';
     // BookListを使用
-    this.books =  BookList();
-    this.len = 1;
-    this.start = 0;
+    // this.books =  BookList();
+    // this.len = 1;
+    // this.start = 0;
 
     this.myName = '佐藤';
     this.memo = $sce.trustAsHtml('<button>aaa</button>');
@@ -39,24 +39,64 @@ export class TestesComponent {
     this.$http = $http;
     this.result = 'GET初期値';
     this.postResult = 'POST初期値';
+
+    this.Book = $resource(
+      '/api/angtests/:_id',
+      { _id: '@_id'},
+      { update: { method: 'PUT' } }
+    );
+
+    this.books = this.Book.query();
+
   }
 
-  onClick2(){
-    this.$http.get('/api/angtests')
-      .then(response => {
-        this.result = response.data;
-      });
+  oninsert(){
+    this.Book.save(
+      this.book,
+      function(){
+        this.books = this.Book.query();
+      }
+    )
   }
 
-  onClickPost(){
-    this.$http.post('/api/angtests', {
-      name: this.postName,
-    })
-    .then(response => {
-      this.postResult = response.data;
-    });
-    this.postName = '';
+  onedit(_id){
+    this.book = this.Book.get({_id: _id});
   }
+
+  onupdate(){
+    this.Book.update(
+      this.book,
+      function(){
+        this.books = this.Book.query();
+      }
+    );
+  }
+
+  ondelete(_id){
+    this.Book.delete(
+      {_id: _id},
+      function(){
+        this.books = this.Book.query();
+      }
+    );
+  }
+
+  // onClick2(){
+  //   this.$http.get('/api/angtests')
+  //     .then(response => {
+  //       this.result = response.data;
+  //     });
+  // }
+  //
+  // onClickPost(){
+  //   this.$http.post('/api/angtests', {
+  //     name: this.postName,
+  //   })
+  //   .then(response => {
+  //     this.postResult = response.data;
+  //   });
+  //   this.postName = '';
+  // }
 
   onLoad(){
     console.log(this.template);
@@ -77,16 +117,16 @@ export class TestesComponent {
   sort(exp, reverse){
     this.members = this.$filter('orderBy')(this.members, exp, reverse);
   }
-  pager(page){
-    this.start = this.len * page;
-  }
+  // pager(page){
+  //   this.start = this.len * page;
+  // }
 
 }
 
 // BookListをDI
-TestesComponent.$inject = ['BookList', '$sce', '$filter', '$http'];
+TestesComponent.$inject = ['BookList', '$sce', '$filter', '$http', '$resource'];
 
-export default angular.module('meanlearnApp.testes', [uiRouter])
+export default angular.module('meanlearnApp.testes', [uiRouter, 'ngResource'])
   .config(routes)
   .component('testes', {
     template: require('./testes.pug'),

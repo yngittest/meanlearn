@@ -16,13 +16,16 @@ import Angtest from './angtest.model';
 // データ初期化
 Angtest.find({}).remove(function() {
   Angtest.create({
-    name: 'test1',
-    info: 'hoge2',
-    active: true
-  }, {
-    name: 'test2',
-    info: 'hoge2',
-    active: true
+    isbn: 'hogeisbn1',
+    title: 'hoge1',
+    price: 3000,
+    publish: 'hogeisha1'
+  },
+  {
+    isbn: 'hogeisbn2',
+    title: 'hoge2',
+    price: 5000,
+    publish: 'hogeisha2'
   }, function(err) {
     console.log('finished populating Angtests');
   });
