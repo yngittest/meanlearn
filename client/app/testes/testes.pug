@@ -2,20 +2,116 @@ div This is the testes view.
 div {{3 + 5}}
 div message: {{ testesCtrl.message }}.
 
-table.table
+<!-- table.table
   tr
     th ISBN
     th 書名
     th 価格
     th 刊行日
-  tr(ng-repeat="book in testesCtrl.books")
+  tr(ng-repeat="book in testesCtrl.books | orderBy: ['published', '-price'] | limitTo: testesCtrl.len: testesCtrl.start")
     td {{book.isbn}}
     td {{book.title}}
     td {{book.price}}
     td {{book.published | date: 'yyyy年MM月dd日'}}
+ul.pagination
+  li
+    a(href="#" ng-click="testesCtrl.pager(0)") 1
+  li
+    a(href="#" ng-click="testesCtrl.pager(1)") 2 -->
 
 form
   label(for="name") 名前：
   input#name(name="name" type="text" ng-model="testesCtrl.myName")
-  div こんにちは、{{testesCtrl.myName}}さん！
+  div(ng-bind="'こんにちは、' + testesCtrl.myName +'さん！'")
   div 初めまして、{{::testesCtrl.myName}}さん！
+
+div(ng-bind-html="testesCtrl.memo")
+
+div(ng-bind-template="{{testesCtrl.message}}, {{testesCtrl.myName}}")
+
+div(ng-pluralize count="testesCtrl.favs.length" offset="2" when="{'0': 'nothing', '1': '{{testesCtrl.favs[0]}} say', '2': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} say', 'one': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} and 1 say', 'other': '{{testesCtrl.favs[0]}}, {{testesCtrl.favs[1]}} and other{} say'}")
+
+<!-- div {{ testesCtrl.favs.length, plural, offset:2 =0 {nothing} =1 {{{testesCtrl.favs[0]}} say} =2 {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} say} one {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} and 1 say} other {{{testesCtrl.favs[0]}} and {{testesCtrl.favs[1]}} and other# say} }} -->
+
+<!-- a(ng-href="{{testesCtrl.url}}") リンク -->
+
+<!-- iframe(src="{{testesCtrl.url}}") -->
+
+script(type="text/ng-template" id="templates/execution.html")
+  dl
+    dt マルカート
+    dd 一つ一つの音を〜
+
+script(type="text/ng-template" id="templates/tempo.html")
+  dl
+    dt アチェレランド
+    dd だんだんはやく
+
+div
+  label(for="temp") テンプレート：
+  select#temp(name="temp" ng-model="testesCtrl.template" ng-options="t.url as t.title for t in testesCtrl.templates")
+    option(value="") 以下から選択してください
+
+div.box(ng-include="testesCtrl.template" onload="testesCtrl.onLoad()")
+
+form
+  label(form="name") 名前：
+  input#name(name="name" type="text" ng-model="testesCtrl.myName")
+  button(ng-click="testesCtrl.onClick()") 送信
+div {{testesCtrl.greeting}}
+
+<!-- img(ng-src="{{testesCtrl.path}}" alt="ロゴ画像" ng-mouseover="testesCtrl.onmouseover($event)" ng-mouseleave="testesCtrl.onmouseleave()") -->
+
+div {{ testesCtrl.price | currency: '¥'}}
+
+table.table
+  tr
+    th(ng-click="name=!name; testesCtrl.sort('name', name)") 名前
+    th(ng-click="old=!old; testesCtrl.sort('old', old)") 年齢
+  tr(ng-repeat="member in testesCtrl.members")
+    td {{member.name}}
+    td {{member.old}}
+
+
+<!-- button(ng-click="testesCtrl.onClick2()") 送信
+
+div {{testesCtrl.result}}
+
+form(name="myForm" novalidate)
+  label(for="postname") 名前：
+  input#postname(name="postname" type="text" ng-model="testesCtrl.postName")
+  button(ng-click="testesCtrl.onClickPost()") 送信
+div {{testesCtrl.postResult}} -->
+
+
+
+table.table
+  tr
+    th 書名
+    th 価格
+    th 出版社
+    th 編集／削除
+  tr(ng-repeat="book in testesCtrl.books")
+    td {{book.title}}
+    td {{book.price}}
+    td {{book.publish}}
+    td
+      button(ng-click="testesCtrl.onedit(book._id)") 編集
+      button(ng-click="testesCtrl.ondelete(book._id)") 削除
+
+form(novalidate)
+  div
+    label(for="isbn") ISBNコード：
+    input#isbn(type="text" size="25" ng-model="testesCtrl.book.isbn")
+  div
+    label(for="title") 書名：
+    input#title(type="text" size="60" ng-model="testesCtrl.book.title")
+  div
+    label(for="price") 価格：
+    input#price(type="text" size="5" ng-model="testesCtrl.book.price")
+  div
+    label(for="publish") 出版社：
+    input#publish(type="text" size="10" ng-model="testesCtrl.book.publish")
+  div
+    button(ng-click="testesCtrl.oninsert()") 登録
+    button(ng-click="testesCtrl.onupdate()") 更新
