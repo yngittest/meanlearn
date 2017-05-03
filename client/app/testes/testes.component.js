@@ -45,37 +45,35 @@ export class TestesComponent {
       { _id: '@_id'},
       { update: { method: 'PUT' } }
     );
-
     this.books = this.Book.query();
-
   }
 
-  oninsert(){
+  oninsert() {
     this.Book.save(
       this.book,
-      function(){
-        this.books = this.Book.query();
-      }
-    )
-  }
-
-  onedit(_id){
-    this.book = this.Book.get({_id: _id});
-  }
-
-  onupdate(){
-    this.Book.update(
-      this.book,
-      function(){
+      function() {
         this.books = this.Book.query();
       }
     );
   }
 
-  ondelete(_id){
+  onedit(_id) {
+    this.book = this.Book.get({_id: _id});
+  }
+
+  onupdate() {
+    this.Book.update(
+      this.book,
+      function() {
+        this.books = this.Book.query();
+      }
+    );
+  }
+
+  ondelete(_id) {
     this.Book.delete(
       {_id: _id},
-      function(){
+      function() {
         this.books = this.Book.query();
       }
     );
@@ -98,23 +96,23 @@ export class TestesComponent {
   //   this.postName = '';
   // }
 
-  onLoad(){
+  onLoad() {
     console.log(this.template);
   }
 
-  onClick(){
+  onClick() {
     this.greeting = 'こんにちは、' + this.myName + 'さん';
   }
 
-  onmouseover(e){
-    // console.log(e);
+  onmouseover(e) {
+    console.log(e);
     this.path = 'http://www.gizmodo.jp/images/2015/09/UDvrcXquKg1l31nW_R.jpg';
   }
-  onmouseleave(){
+  onmouseleave() {
     this.path = 'http://iphone-mania.jp/wp-content/uploads/2016/09/IMG_8216.jpg';
   }
 
-  sort(exp, reverse){
+  sort(exp, reverse) {
     this.members = this.$filter('orderBy')(this.members, exp, reverse);
   }
   // pager(page){
@@ -134,19 +132,18 @@ export default angular.module('meanlearnApp.testes', [uiRouter, 'ngResource'])
     controllerAs: 'testesCtrl'
   })
   // BookListを追加
-  .value('BookList', function(){
+  .value('BookList', function() {
     return [
       {
         isbn: 'hogeisbn1',
         title: 'hoge1',
         price: 3000,
-        published: new Date(2015,1,8)
-      },
-      {
+        published: new Date(2015, 1, 8)
+      }, {
         isbn: 'hogeisbn2',
         title: 'hoge2',
         price: 5000,
-        published: new Date(2015,10,23)
+        published: new Date(2015, 10, 23)
       }
     ];
   })

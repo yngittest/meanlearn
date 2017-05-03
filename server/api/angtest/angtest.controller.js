@@ -20,8 +20,7 @@ Angtest.find({}).remove(function() {
     title: 'hoge1',
     price: 3000,
     publish: 'hogeisha1'
-  },
-  {
+  }, {
     isbn: 'hogeisbn2',
     title: 'hoge2',
     price: 5000,
