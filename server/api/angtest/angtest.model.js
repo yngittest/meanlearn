@@ -10,7 +10,9 @@ var AngtestSchema = new mongoose.Schema({
   isbn: String,
   title: String,
   price: Number,
-  publish: String
+  publish: String,
+  imgFilename: String,
+  imgBase64: String
 });
 
 registerEvents(AngtestSchema);

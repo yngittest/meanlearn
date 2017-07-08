@@ -2,6 +2,7 @@
 const angular = require('angular');
 
 const uiRouter = require('angular-ui-router');
+const base64 = require('angular-base64-upload');
 
 import routes from './testes.routes';
 
@@ -95,6 +96,19 @@ export class TestesComponent {
   //   });
   //   this.postName = '';
   // }
+  postImage() {
+    console.log(this.hoge.filename);
+    this.$http.post('/api/angtests', {
+      imgFilename: this.hoge.filename,
+      imgBase64: this.hoge.base64
+    });
+  }
+  getImage(){
+    this.$http.get('/api/angtests')
+      .then(response => {
+        this.imgGetResult = response.data;
+      });
+  }
 
   onLoad() {
     console.log(this.template);
@@ -124,7 +138,7 @@ export class TestesComponent {
 // BookListをDI
 TestesComponent.$inject = ['BookList', '$sce', '$filter', '$http', '$resource'];
 
-export default angular.module('meanlearnApp.testes', [uiRouter, 'ngResource'])
+export default angular.module('meanlearnApp.testes', [uiRouter, 'ngResource', base64])
   .config(routes)
   .component('testes', {
     template: require('./testes.pug'),
